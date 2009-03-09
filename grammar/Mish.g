@@ -1,7 +1,3 @@
-/*
-Mish shell language grammar 
-
-*/
 grammar Mish;
 
 options
@@ -9,3 +5,5 @@ options
     language=CSharp2;
 }
 
+NEWLINE : '\r'?'\n' ;
+WS : (' '|'\t'|'\n'|'\r')+ {skip();} ;
