@@ -1,7 +1,6 @@
 grammar Mish;
 
-options
-{
+options {
     language=CSharp2;
 }
 
