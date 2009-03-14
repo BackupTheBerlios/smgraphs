@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Msh.CompileServices
+namespace Mish.System.CodeDom
 {
-    public class Class1
+    class Class1
     {
     }
 }

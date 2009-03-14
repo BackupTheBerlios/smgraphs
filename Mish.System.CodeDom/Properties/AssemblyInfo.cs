@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Msh.CompileServices")]
+[assembly: AssemblyTitle("Mish.System.CodeDom")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Philips")]
-[assembly: AssemblyProduct("Msh.CompileServices")]
+[assembly: AssemblyProduct("Mish.System.CodeDom")]
 [assembly: AssemblyCopyright("Copyright © Philips 2009")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("befd3a7d-0ca4-4265-a22f-dad0b15b281c")]
+[assembly: Guid("c3d0af33-2599-45fe-bd0a-a5529e6695f0")]
 
 // Version information for an assembly consists of the following four values:
 //

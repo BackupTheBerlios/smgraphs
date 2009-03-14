@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{0FC796EE-D881-4289-9D31-7350F05B2FA8}</ProjectGuid>
+    <ProjectGuid>{BE4287CB-97D2-4C3A-B961-017FEBEE8C46}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Msh.CompileServices</RootNamespace>
-    <AssemblyName>Msh.CompileServices</AssemblyName>
+    <RootNamespace>Mish.System.CodeDom</RootNamespace>
+    <AssemblyName>Mish.System.CodeDom</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -17,10 +17,13 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>..\product\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>..\product\Mish.System.CodeDom.XML</DocumentationFile>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <NoWarn>1591</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -31,6 +34,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Antlr3.Runtime, Version=3.1.2.41038, Culture=neutral, PublicKeyToken=3a9cab8f8d22bfb7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\prebuild\antlr\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="Antlr3.Utility, Version=0.1.0.41038, Culture=neutral, PublicKeyToken=3a9cab8f8d22bfb7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\prebuild\antlr\Antlr3.Utility.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -49,6 +60,35 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <BuildDependsOn>
+      GenerateAntlrCode;
+      $(BuildDependsOn)
+    </BuildDependsOn>
+    <!--<Antlr3ToolPath>$(MSBuildProjectDirectory)\..\..\Tools\ANTLR</Antlr3ToolPath>-->
+    <!-- todo put all tools paths in one external files and use it by inclusion -->
+    <Antlr3ToolPath>d:\michaelP\bin\antlr</Antlr3ToolPath>
+    <Antlr3Libs>$(Antlr3ToolPath)\antlr-latest.jar</Antlr3Libs>
+  </PropertyGroup>
+  <ItemGroup>
+    <Antlr Include="Mish.g">
+      <OutputFiles>MishLexer.cs;MishParser.cs</OutputFiles>
+    </Antlr>
+    <Compile Include="MishLexer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Mish.g</DependentUpon>
+    </Compile>
+    <Compile Include="MishParser.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Mish.g</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <Target Name="GenerateAntlrCode" Inputs="@(Antlr)" Outputs="%(Antlr.OutputFiles)">
+    <Message Text="Generating code from antlr grammar" />
+    <Exec ContinueOnError="true" Command="java -cp $(Antlr3Libs) org.antlr.Tool -message-format vs2005 @(Antlr)" Outputs="%(Antlr3.OutputFiles)" />
+  </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
