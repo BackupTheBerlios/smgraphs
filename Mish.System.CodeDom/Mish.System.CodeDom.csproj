@@ -86,7 +86,7 @@
     </Compile>
   </ItemGroup>
   <Target Name="GenerateAntlrCode" Inputs="@(Antlr)" Outputs="%(Antlr.OutputFiles)">
-    <Message Text="Generating code from antlr grammar" />
+    <Message Text="Generating code from antlr grammar $(MSBuildToolsPath)\Microsoft.CSharp.targets" />
     <Exec ContinueOnError="true" Command="java -cp $(Antlr3Libs) org.antlr.Tool -message-format vs2005 @(Antlr)" Outputs="%(Antlr3.OutputFiles)" />
   </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

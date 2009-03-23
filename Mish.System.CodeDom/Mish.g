@@ -1,15 +1,28 @@
-
 grammar Mish;
-
+ 
 options
 {
-    language=CSharp2;
+    //language=CSharp2;
+    language=Java;
+    output=AST;
 }
-SINGLE_LINE_COMMENT : 
-	SINGLE_LINE_COMMENT_START  
-	.*
-	NEWLINE
+comment 	:
+		(LINE_COMMENT | COMMENT)+		
 	;
-SINGLE_LINE_COMMENT_START : '//';
-NEWLINE : '\r'?'\n' ;
-WS : (' '|'\t'|'\n'|'\r')+ {skip();} ;
+statement
+	:
+		 //LINE_COMMENT
+	;
+WS  :  (' '|'\r'|'\t'|'\u000C'|'\n') //{$channel=HIDDEN;}
+    ;
+
+COMMENT
+    :   '/*' ( options {greedy=false;} : . )* '*/' //{$channel=HIDDEN;}
+    ;
+
+LINE_COMMENT
+    : 
+    '//' 
+    ~('\n'|'\r')*
+    ('\r'?'\n' | EOF) //{$channel=HIDDEN;}
+    ;
