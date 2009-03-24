@@ -6,14 +6,21 @@ options
     language=Java;
     output=AST;
 }
+tokens{
+	COMMENT_DATA;
+}
 comment 	:
-		(LINE_COMMENT | COMMENT)+		
+		(
+		LINE_COMMENT  -> ^( COMMENT_DATA LINE_COMMENT)
+	        | COMMENT  -> ^(  COMMENT_DATA COMMENT)
+	        )+
+	       		
 	;
 statement
 	:
 		 //LINE_COMMENT
 	;
-WS  :  (' '|'\r'|'\t'|'\u000C'|'\n') //{$channel=HIDDEN;}
+WS  :  (' '|'\r'|'\t'|'\u000C'|'\n') {$channel=HIDDEN;}
     ;
 
 COMMENT
@@ -24,5 +31,9 @@ LINE_COMMENT
     : 
     '//' 
     ~('\n'|'\r')*
-    ('\r'?'\n' | EOF) //{$channel=HIDDEN;}
+    (ENDLINE | EOF) //{$channel=HIDDEN;}
     ;
+
+ENDLINE	:	'\r'?'\n'
+	;
+
